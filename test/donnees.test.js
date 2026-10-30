@@ -74,3 +74,11 @@ test('ajouterReleve ajoute à la fin du fichier et renvoie le nombre de relevés
   assert.equal(contenu.length, 2);
   assert.deepEqual(contenu[1], nouveau);
 });
+
+test('creerReleve accepte 100 comme humidité (limite valide)', () => {
+    const releve = creerReleve('P07', '100', '29', '2026-10-29');
+    assert.equal(releve.humidite, 100);
+});
+test('creerReleve refuse une date mal écrite', () => {
+    assert.throws(() => creerReleve('P07', '64', '29', '29/10/2026'), /date/i);
+});
