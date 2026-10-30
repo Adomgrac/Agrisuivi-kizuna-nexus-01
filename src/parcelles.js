@@ -3,10 +3,8 @@
 
 // Renvoie une ligne de texte qui décrit la parcelle.
 // Exemple : 'P01 | Awa Diallo | Soubré | cacao | 3 ha'
-export function formaterParcelle(parcelle) {
-  throw new Error(
-    "TODO Membre 1 : coder formaterParcelle dans src/parcelles.js",
-  );
+export function formaterParcelle(parcelle){
+  return `${parcelle.id} | ${parcelle.producteur} | ${parcelle.localite} | ${parcelle.culture} | ${parcelle.surface} ha`;
 }
 
 // Renvoie la parcelle dont l'id est demandé, ou undefined si elle n'existe pas.
