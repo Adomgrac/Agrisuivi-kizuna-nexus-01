@@ -11,25 +11,57 @@ export async function lireJson(chemin) {
     const texte = await readFile(chemin, "utf8");
     return JSON.parse(texte);
   } catch (erreur) {
-    console.log(`Impossible de lire ${chemin}`, { cause: erreur });
-  }
+    throw new Error(`Impossible de lire ${chemin}`, { cause: erreur })
+  };
 }
 
 // Lit les quatre fichiers EN MÊME TEMPS avec Promise.all.
 // Renvoie { parcelles, cultures, releves, recoltes }.
 export async function chargerDonnees(dossier) {
-  throw new Error("TODO Membre 4 : coder chargerDonnees dans src/donnees.js");
-}
+  const [parcelles, cultures, releves, recoltes]= await Promise.all([
+    lireJson(join(dossier, 'parcelles.json')),
+    lireJson(join(dossier, `cultures.json`)),
+    lireJson(join(dossier,`releves.json`)), 
+    lireJson(join(dossier,`recoltes.json`)),
+  ]);
+  return {parcelles, cultures,releves,recoltes};
+};
 
 // Vérifie les textes tapés dans le terminal et renvoie un nouveau relevé.
 // Exemple : creerReleve('p07', '64', '29', '2026-10-29')
 //   → { parcelle: 'P07', date: '2026-10-29', humidite: 64, temperature: 29 }
 export function creerReleve(parcelle, humiditeTexte, temperatureTexte, date) {
-  throw new Error("TODO Membre 4 : coder creerReleve dans src/donnees.js");
+  if (!parcelle){
+    throw new Error("Veuillez indiquer une parcelle (exemple:P02)");
 }
+  if (typeof date !== "string" ||!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    throw new Error("La date doit respecter le format AAAA-MM-JJ (exemple : 2026-10-29)");
+}
+const humidite= Number(humiditeTexte);
+  if (
+  humiditeTexte===undefined ||
+  humiditeTexte ===""||
+  Number.isNaN(humidite)||
+  humidite<0 || 
+  humidite>100
+) {
+    throw new Error ("l'humidité doit être un nombre compris entre 0 et 100");
+}
+  const temperature= Number(temperatureTexte);
+  if (
+    temperatureTexte===undefined || temperatureTexte===""|| Number.isNaN(temperature)){
+      throw new Error("la température doit être un nombre (exemple:15)");
+    }
+  return{parcelle:parcelle.toUpperCase(), date, humidite ,temperature};
+  }
+
+
 
 // Ajoute le relevé à la fin du fichier JSON, enregistre le fichier,
 // puis renvoie le nouveau nombre de relevés.
 export async function ajouterReleve(chemin, releve) {
-  throw new Error("TODO Membre 4 : coder ajouterReleve dans src/donnees.js");
-}
+  const releves = await lireJson(chemin);
+  releves.push(releve);
+  await writeFile(chemin,JSON.stringify(releves, null, 2),"utf8");
+  return releves.length; 
+};

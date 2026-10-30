@@ -26,13 +26,23 @@ export function revenu(kg, prixKg) {
 // Renvoie une ligne de bilan par parcelle, dans le même ordre que parcelles.
 // Chaque ligne : { id, producteur, culture, kg, rendement, revenu }
 export function bilanRecoltes(parcelles, recoltes, cultures) {
-  throw new Error("TODO Membre 3 : coder bilanRecoltes dans src/recoltes.js");
+  return parcelles.map((parcelle) => {
+    const culture = cultures.find((element) => element.code === parcelle.culture);
+    const kg = totalRecolte(recoltes, parcelle.id);
+    return {
+      id: parcelle.id,
+      producteur: parcelle.producteur,
+      culture: parcelle.culture,
+      kg,
+      rendement: rendement(kg, parcelle.surface),
+      revenu: revenu(kg, culture.prixKg),
+    };
+  });
 }
+
 
 // Renvoie une COPIE du bilan, triée du plus grand revenu au plus petit.
 // Le tableau reçu ne doit pas changer d'ordre.
 export function classerParRevenu(bilan) {
-  throw new Error(
-    "TODO Membre 3 : coder classerParRevenu dans src/recoltes.js",
-  );
+  return [...bilan].sort((a, b) => b.revenu - a.revenu);
 }
