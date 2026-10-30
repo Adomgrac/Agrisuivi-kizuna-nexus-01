@@ -18,9 +18,11 @@ export function interrogerCapteur(capteur) {
 // Même travail que interrogerCapteur, mais ne rejette jamais :
 // en cas d'erreur, renvoie { parcelle, erreur } avec le message de l'erreur.
 export async function interrogerSansPlanter(capteur) {
-  throw new Error(
-    "TODO Bonus : coder interrogerSansPlanter dans src/station.js",
-  );
+  try {
+    return await interrogerCapteur(capteur);
+  } catch (erreur) {
+    return { parcelle: capteur.parcelle, erreur: erreur.message };
+  }
 }
 
 // Interroge les capteurs L'UN APRÈS L'AUTRE (on attend chaque réponse).
