@@ -42,6 +42,7 @@ export function construireRapport(donnees, date) {
 
 // Écrit le texte dans le fichier demandé. Crée le dossier s'il n'existe pas.
 export async function enregistrerRapport(chemin, texte) {
-  throw new Error("TODO Équipe : coder enregistrerRapport dans src/rapport.js");
+  await mkdir(dirname(chemin), { recursive: true });
+  await writeFile(chemin, texte, "utf8");
 }
 
