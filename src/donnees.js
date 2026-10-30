@@ -31,11 +31,30 @@ export async function chargerDonnees(dossier) {
 // Exemple : creerReleve('p07', '64', '29', '2026-10-29')
 //   → { parcelle: 'P07', date: '2026-10-29', humidite: 64, temperature: 29 }
 export function creerReleve(parcelle, humiditeTexte, temperatureTexte, date) {
-  throw new Error("TODO Membre 4 : coder creerReleve dans src/donnees.js");
+  if (!parcelle){
+    throw new Error("Veuillez indiquer une parcelle (exemple:P02)");
 }
+const humidite= Number(humiditeTexte);
+if (
+  humiditeTexte===undefined || humiditeTexte ===""|| Number.isNaN(humidite)
+  || humidite<0 || humidite>100){
+    throw new Error ("l'humidité doit être un nombre compris entre 0 et 100");
+  }
+  const temperature= Number(temperatureTexte);
+  if (
+    temperatureTexte===undefined || temperatureTexte===""|| Number.isNaN(temperature)){
+      throw new Error("la température doit être un nombre (exemple:15)")
+    }
+    return{parcelle:parcelle.toUpperCase(), date, humidite ,temperature};
+  }
+
+
 
 // Ajoute le relevé à la fin du fichier JSON, enregistre le fichier,
 // puis renvoie le nouveau nombre de relevés.
 export async function ajouterReleve(chemin, releve) {
-  throw new Error("TODO Membre 4 : coder ajouterReleve dans src/donnees.js");
-}
+  const releves = await lireJson(chemin);
+  releves.push(releve);
+  await writeFile (chemin,JSON.stringify(releves, null, 2),"utf8");
+  return releves.lenght; 
+};
