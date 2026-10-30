@@ -12,7 +12,7 @@ export async function lireJson(chemin) {
     return JSON.parse(texte);
   } catch (erreur) {
     throw new Error(`Impossible de lire ${chemin}`, { cause: erreur })
-  }
+  };
 }
 
 // Lit les quatre fichiers EN MÊME TEMPS avec Promise.all.
@@ -24,7 +24,7 @@ export async function chargerDonnees(dossier) {
     lireJson(join(dossier,`releves.json`)), 
     lireJson(join(dossier,`recoltes.json`)),
   ]);
-  return {parcelles, cultures,releves,recoltes}
+  return {parcelles, cultures,releves,recoltes};
 };
 
 // Vérifie les textes tapés dans le terminal et renvoie un nouveau relevé.
@@ -34,24 +34,25 @@ export function creerReleve(parcelle, humiditeTexte, temperatureTexte, date) {
   if (!parcelle){
     throw new Error("Veuillez indiquer une parcelle (exemple:P02)");
 }
-if (
-  typeof date !== "string" ||
-  !/^\d{4}-\d{2}-\d{2}$/.test(date)
-) {
-  throw new Error("La date doit respecter le format AAAA-MM-JJ (exemple : 2026-10-29)");
+  if (typeof date !== "string" ||!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    throw new Error("La date doit respecter le format AAAA-MM-JJ (exemple : 2026-10-29)");
 }
 const humidite= Number(humiditeTexte);
-if (
-  humiditeTexte===undefined || humiditeTexte ===""|| Number.isNaN(humidite)
-  || humidite<0 || humidite>100){
+  if (
+  humiditeTexte===undefined ||
+  humiditeTexte ===""||
+  Number.isNaN(humidite)||
+  humidite<0 || 
+  humidite>100
+) {
     throw new Error ("l'humidité doit être un nombre compris entre 0 et 100");
-  }
+}
   const temperature= Number(temperatureTexte);
   if (
     temperatureTexte===undefined || temperatureTexte===""|| Number.isNaN(temperature)){
-      throw new Error("la température doit être un nombre (exemple:15)")
+      throw new Error("la température doit être un nombre (exemple:15)");
     }
-    return{parcelle:parcelle.toUpperCase(), date, humidite ,temperature};
+  return{parcelle:parcelle.toUpperCase(), date, humidite ,temperature};
   }
 
 
