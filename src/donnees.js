@@ -55,6 +55,6 @@ if (
 export async function ajouterReleve(chemin, releve) {
   const releves = await lireJson(chemin);
   releves.push(releve);
-  await writeFile (chemin,JSON.stringify(releves, null, 2),"utf8");
-  return releves.lenght; 
+  await writeFile(chemin,JSON.stringify(releves, null, 2),"utf8");
+  return releves.length; 
 };
