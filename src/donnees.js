@@ -34,6 +34,12 @@ export function creerReleve(parcelle, humiditeTexte, temperatureTexte, date) {
   if (!parcelle){
     throw new Error("Veuillez indiquer une parcelle (exemple:P02)");
 }
+if (
+  typeof date !== "string" ||
+  !/^\d{4}-\d{2}-\d{2}$/.test(date)
+) {
+  throw new Error("La date doit respecter le format AAAA-MM-JJ (exemple : 2026-10-29)");
+}
 const humidite= Number(humiditeTexte);
 if (
   humiditeTexte===undefined || humiditeTexte ===""|| Number.isNaN(humidite)
