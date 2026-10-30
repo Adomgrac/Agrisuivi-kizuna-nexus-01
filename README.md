@@ -161,6 +161,6 @@ La date de la première ligne est celle du jour. Le formateur testera aussi votr
 | Rôle                  | Prénom et nom | Compte GitHub |
 | --------------------- | ------------- | ------------- |
 | Membre 1 — Parcelles  |victoire ADOM             |  adomgrac             |
-| Membre 2 — Irrigation | MARC LIADE   marc21henic-cyber        |               |
+| Membre 2 — Irrigation | MARC LIADE           |   marc21henic-cyber            |
 | Membre 3 — Récoltes   | SITAFA TOURE              | rengoku-coder              |
 | Membre 4 — Données    | ZIE SANOGO              | sanogoziemaruis              |
